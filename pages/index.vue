@@ -13,7 +13,7 @@
       <label for="duration">Duration in years</label>
       <UInput v-model="duration" />
     </div>
-    boe {{ annuityResult }}
+    kieke
     <div class="my-5">
       <UButton @click="calculate">Calculate</UButton>
     </div>
@@ -30,13 +30,19 @@
 </template>
 
 <script setup lang="ts">
+// HELPER FUNCTIONS
+let toEuro = new Intl.NumberFormat("be-BE", {
+  style: "currency",
+  currency: "EUR",
+});
+
 const amount = ref(100000);
 const rate = ref(0.04);
 const duration = ref(10);
-const annuityResult = ref(null);
+const annuityResult = ref(undefined);
 
 const calculate = async () => {
-  const annuityResult = await $fetch("/api/annuity", {
+  const annuityResults = await $fetch("/api/annuity", {
     method: "POST",
     body: {
       amount: amount.value,
@@ -44,8 +50,9 @@ const calculate = async () => {
       duration: duration.value,
     },
   });
-  console.log("annuityResult", annuityResult);
-  annuityResult.value = "boe"; // annuityResult;
+  console.log("annuityResult", annuityResults);
+  //annuityResult.value = annuityResult;
+  return (annuityResult.value = annuityResults);
 };
 
 watch(
@@ -67,7 +74,7 @@ const inputParameterTable = computed(() => {
   return [
     {
       parameter: "Loan amount",
-      value: annuityResult.value.input_parameters.loan_amount,
+      value: toEuro.format(annuityResult.value.input_parameters.loan_amount),
     },
     {
       parameter: "Periods years",
@@ -75,7 +82,7 @@ const inputParameterTable = computed(() => {
     },
     {
       parameter: "Periods months",
-      value: annuityResult.value.input_parameters.periods_years,
+      value: annuityResult.value.input_parameters.periods_months,
     },
     {
       parameter: "Interest rate year",
@@ -94,19 +101,19 @@ const annuityInfoTable = computed(() => {
   return [
     {
       parameter: "Annuity per month",
-      value: annuityResult.value.annuity_info.annuity_per_month,
+      value: toEuro.format(annuityResult.value.annuity_info.annuity_per_month),
     },
     {
       parameter: "Annuity per year",
-      value: annuityResult.value.annuity_info.annuity_per_year,
+      value: toEuro.format(annuityResult.value.annuity_info.annuity_per_year),
     },
     {
       parameter: "Interest cost",
-      value: annuityResult.value.annuity_info.interest_cost,
+      value: toEuro.format(annuityResult.value.annuity_info.interest_cost),
     },
     {
       parameter: "Total payoff",
-      value: annuityResult.value.annuity_info.total_payoff,
+      value: toEuro.format(annuityResult.value.annuity_info.total_payoff),
     },
   ];
 });

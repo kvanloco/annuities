@@ -77,11 +77,10 @@ export function calculateAnnuityPayment(
   start_date: Dayjs = dayjs()
 ): AnnuityResult {
   const r = interest_rate / 100; // Convert interest rate to a decimal
-  console.log(r);
+
   //const r = 0.25;
   const annuity_per_month =
     (r / (1 - Math.pow(1 + r, -number_of_periods))) * loan_amount;
-  console.log(annuity_per_month);
 
   const total_pay_off = period_months(number_of_periods) * annuity_per_month;
   const total_interest = loan_amount - total_pay_off;
@@ -94,7 +93,7 @@ export function calculateAnnuityPayment(
     interest_rate_year: interest_rate,
     interest_rate_month: interest_month(interest_rate) * 100,
   };
-  console.log("%c Input Parameters", "color:yellow; font-size:20px");
+  //console.log("%c Input Parameters", "color:yellow; font-size:20px");
   //console.table(input_parameters);
 
   const annuity_info: AnnuityInfo = {
@@ -103,7 +102,7 @@ export function calculateAnnuityPayment(
     interest_cost: -total_interest,
     annuity_per_year: cost_per_year,
   };
-  console.log("%c Annuity info", "color:yellow; font-size:20px");
+  //console.log("%c Annuity info", "color:yellow; font-size:20px");
   //console.table(annuity_info);
 
   //let arr = new Array(period_years * 12);
@@ -153,7 +152,7 @@ export function calculateAnnuityPayment(
       ];
     }
   }, []);
-  console.log("%c Annuity Table", "color:yellow; font-size:20px");
+  //console.log("%c Annuity Table", "color:yellow; font-size:20px");
   //console.table(annuity_table);
   return {
     input_parameters: input_parameters,
