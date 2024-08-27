@@ -45,7 +45,7 @@ const calculate = async () => {
     },
   });
   console.log("annuityResult", annuityResult);
-  annuityResult.value = toRef(annuityResult); // annuityResult;
+  annuityResult.value = "boe"; // annuityResult;
 };
 
 watch(
