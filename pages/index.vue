@@ -25,7 +25,23 @@
     <h1 class="text-3xl font-bold underline">Annuity info</h1>
     <UTable :rows="annuityInfoTable" />
     <h1 class="text-3xl font-bold underline">Annuity table</h1>
-    <UTable :rows="annuityTable" />
+    <UTable :rows="annuityTable">
+      <template #annuity-data="{ row }">
+        <span>{{ toEuro.format(row.annuity) }}</span>
+      </template>
+      <template #interest-data="{ row }">
+        <span>{{ toEuro.format(row.interest) }}</span>
+      </template>
+      <template #capital-data="{ row }">
+        <span>{{ toEuro.format(row.capital) }}</span>
+      </template>
+      <template #rest-data="{ row }">
+        <span>{{ toEuro.format(row.rest) }}</span>
+      </template>
+      <template #total_payed-data="{ row }">
+        <span>{{ toEuro.format(row.total_payed) }}</span>
+      </template>
+    </UTable>
   </div>
 </template>
 

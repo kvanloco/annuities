@@ -77,11 +77,12 @@ export function calculateAnnuityPayment(
   start_date: Dayjs = dayjs()
 ): AnnuityResult {
   const r = interest_rate / 100; // Convert interest rate to a decimal
-
+  console.log(r);
   //const r = 0.25;
   const annuity_per_month =
-    (r / (1 - Math.pow(1 + r, -number_of_periods))) * loan_amount;
-
+    (r / (1 - Math.pow(1 + r, -period_months(number_of_periods)))) *
+    loan_amount;
+  console.log(annuity_per_month);
   const total_pay_off = period_months(number_of_periods) * annuity_per_month;
   const total_interest = loan_amount - total_pay_off;
   const cost_per_year = annuity_per_month * 12;
