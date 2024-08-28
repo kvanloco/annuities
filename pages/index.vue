@@ -40,13 +40,16 @@
         </div>
       </div>
     </div>
-    <div>
+    <div class="flex gap-2">
       <div class="my-2">
         <UButton @click="calculate">Calculate</UButton>
       </div>
 
-      <UDivider />
+      <div class="my-2" v-if="annuityResult">
+        <UButton @click="saveAnnuity">Save</UButton>
+      </div>
     </div>
+    <UDivider />
     <div v-if="annuityResult" class="mt-2">
       <h1 class="text-xl font-bold">Input parameters</h1>
       <UTable
@@ -100,6 +103,38 @@
 </template>
 
 <script setup lang="ts">
+const toast = useToast();
+import { useStorage } from "@vueuse/core";
+import { v4 as uuidv4 } from "uuid";
+
+const annuityItems = computed(() => {
+  const items = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.startsWith("annuity")) {
+      const item = localStorage.getItem(key);
+
+      console.log("item", JSON.parse(item));
+      items.push(item);
+    }
+  }
+  console.log("annuityItems", items);
+  return items;
+});
+
+const saveAnnuity = () => {
+  // save to storage
+  const uniqueKey = uuidv4();
+  const prefix = "annuity-";
+  const key = prefix + uniqueKey;
+  //state.value = { ...state.value, count: state.value.count + 1 };
+  //console.log("state", state.value);
+  localStorage.setItem(key, JSON.stringify(annuityResult.value));
+  toast.add({
+    title: "Annuity saved",
+    description: "Annuity saved successfully",
+  });
+};
 // HELPER FUNCTIONS
 let toEuro = new Intl.NumberFormat("be-BE", {
   style: "currency",
@@ -134,6 +169,9 @@ const calculate = async () => {
   });
   //console.log("annuityResult", annuityResults);
   //annuityResult.value = annuityResult;
+  toast.add({
+    title: "The annuity has been calculated",
+  });
   return (annuityResult.value = annuityResults);
 };
 

@@ -26,4 +26,5 @@ useHead({
 
     <NuxtPage />
   </UContainer>
+  <UNotifications />
 </template>

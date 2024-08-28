@@ -8,3 +8,7 @@ It also generates a repayment table.
 Give the expected loan amount, the yearly interest rate and the duration of the loan in years. 
 Optionaly you can give the expected start date of the loan. 
 
+## ToDo
+- Make pdf export
+- Add graph
+- Save to localstorage
