@@ -1,3 +1,14 @@
+<script lang="ts" setup>
+useHead({
+  title: "Annuity Calculator",
+  meta: [{ name: "description", content: "Annuity Calculator!" }],
+  bodyAttrs: {
+    class: "test",
+  },
+  script: [{ innerHTML: "console.log('Hello world')" }],
+});
+</script>
+
 <template>
   <UContainer>
     <UCard class="mt-10">
