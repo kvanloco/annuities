@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { Dayjs } from "../node_modules/dayjs/index";
+
 dayjs().format();
 /**
  * Calculate the annuity from given parameters

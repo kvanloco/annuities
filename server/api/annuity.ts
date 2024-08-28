@@ -9,7 +9,7 @@ type Body = {
 
 export default defineEventHandler<{ body: Body }>(async (event) => {
   const { amount, duration, rate, start_date } = await readBody(event);
-  console.log(amount, duration, rate, start_date);
+  //console.log(amount, duration, rate, start_date);
   //const annuity = amount * (rate / (1 - Math.pow(1 + rate, -duration)));
 
   const annuity = calculateAnnuityPayment(
