@@ -16,7 +16,7 @@ export default defineEventHandler<{ body: Body }>(async (event) => {
     Number(amount),
     Number(rate),
     Number(duration),
-    start_date ? start_date : null
+    start_date ? start_date : undefined
   );
 
   return annuity;

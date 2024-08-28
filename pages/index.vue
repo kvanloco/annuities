@@ -1,20 +1,20 @@
 <template>
-  Index page
+  Annuity Calculator
   <div>
     <div class="my-2">
-      <label for="amount">Amount</label>
-      <UInput v-model="amount" />
+      <label for="amount">Loan Amount</label>
+      <UInput type="number" v-model="amount" />
     </div>
     <div class="my-2">
-      <label for="rate">Rate</label>
-      <UInput v-model="rate" />
-    </div>
-    <div class="my-2">
-      <label for="duration">Duration in years</label>
-      <UInput v-model="duration" />
+      <label for="rate">Rate in % per year</label>
+      <UInput type="number" v-model="rate" />
     </div>
     <div class="my-2">
       <label for="duration">Duration in years</label>
+      <UInput type="number" v-model="duration" />
+    </div>
+    <div class="my-2">
+      <label for="duration">Start date</label>
       <UInput type="date" v-model="start_date" />
     </div>
     kieke
@@ -24,12 +24,34 @@
     <UDivider />
   </div>
   <div v-if="annuityResult">
-    <h1 class="text-3xl font-bold underline">Input parameters</h1>
-    <UTable :rows="inputParameterTable" />
-    <h1 class="text-3xl font-bold underline">Annuity info</h1>
-    <UTable :rows="annuityInfoTable" />
-    <h1 class="text-3xl font-bold underline">Annuity table</h1>
-    <UTable :rows="annuityTable">
+    <h1 class="text-xl font-bold">Input parameters</h1>
+    <UTable
+      :rows="inputParameterTable"
+      :ui="{
+        td: {
+          padding: ' py-1',
+        },
+      }"
+    >
+    </UTable>
+    <h1 class="text-xl font-bold">Annuity info</h1>
+    <UTable
+      :rows="annuityInfoTable"
+      :ui="{
+        td: {
+          padding: ' py-2',
+        },
+      }"
+    ></UTable>
+    <h1 class="text-xl font-bold">Annuity table</h1>
+    <UTable
+      :rows="annuityTable"
+      :ui="{
+        td: {
+          padding: ' py-1',
+        },
+      }"
+    >
       <template #annuity-data="{ row }">
         <span>{{ toEuro.format(row.annuity) }}</span>
       </template>
@@ -71,7 +93,7 @@ let toDateMonth = new Intl.DateTimeFormat("be-BE", {
 const amount = ref(100000);
 const rate = ref(4);
 const duration = ref(10);
-const start_date = ref(new Date());
+const start_date = ref(null);
 const annuityResult = ref(undefined);
 
 const calculate = async () => {
