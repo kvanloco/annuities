@@ -13,6 +13,10 @@
       <label for="duration">Duration in years</label>
       <UInput v-model="duration" />
     </div>
+    <div class="my-2">
+      <label for="duration">Duration in years</label>
+      <UInput type="date" v-model="start_date" />
+    </div>
     kieke
     <div class="my-5">
       <UButton @click="calculate">Calculate</UButton>
@@ -41,6 +45,9 @@
       <template #total_payed-data="{ row }">
         <span>{{ toEuro.format(row.total_payed) }}</span>
       </template>
+      <template #time-data="{ row }">
+        <span>{{ toDateMonth.format(new Date(row.time)) }}</span>
+      </template>
     </UTable>
   </div>
 </template>
@@ -52,9 +59,19 @@ let toEuro = new Intl.NumberFormat("be-BE", {
   currency: "EUR",
 });
 
+let toPercent = new Intl.NumberFormat("be-BE", {
+  style: "percent",
+  maximumSignificantDigits: 3,
+});
+
+let toDateMonth = new Intl.DateTimeFormat("be-BE", {
+  dateStyle: "short",
+});
+
 const amount = ref(100000);
-const rate = ref(0.04);
+const rate = ref(4);
 const duration = ref(10);
+const start_date = ref(new Date());
 const annuityResult = ref(undefined);
 
 const calculate = async () => {
@@ -64,6 +81,7 @@ const calculate = async () => {
       amount: amount.value,
       rate: rate.value,
       duration: duration.value,
+      start_date: start_date.value,
     },
   });
   console.log("annuityResult", annuityResults);
@@ -102,11 +120,15 @@ const inputParameterTable = computed(() => {
     },
     {
       parameter: "Interest rate year",
-      value: annuityResult.value.input_parameters.interest_rate_year,
+      value: toPercent.format(
+        annuityResult.value.input_parameters.interest_rate_year / 100
+      ),
     },
     {
       parameter: "Interest rate month",
-      value: annuityResult.value.input_parameters.interest_rate_month,
+      value: toPercent.format(
+        annuityResult.value.input_parameters.interest_rate_month / 100
+      ),
     },
   ];
 });
