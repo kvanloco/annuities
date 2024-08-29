@@ -165,8 +165,7 @@ watch(
 );
 */
 const annuityTable = computed(() => {
-  if (!annuityResult.value) return [];
-  return annuityResult.value.annuity_table;
+  return annuityResult.value?.annuity_table;
 });
 
 const inputParameterTable = computed(() => {
