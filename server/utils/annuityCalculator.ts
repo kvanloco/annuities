@@ -121,18 +121,17 @@ export function calculateAnnuityPayment(
           annuity: annuity_per_month,
           interest: loan_amount * interest_month(interest_rate),
           capital:
-            annuity_info.annuity_per_month -
-            loan_amount * interest_month(interest_rate),
-          rest: total_pay_off - annuity_info.annuity_per_month,
-          total_payed: annuity_info.annuity_per_month,
+            annuity_per_month - loan_amount * interest_month(interest_rate),
+          rest: total_pay_off - annuity_per_month,
+          total_payed: annuity_per_month,
         },
       ];
     } else {
       const prevLastItem = prev.slice(-1)[0];
       const interest1 = prevLastItem.rest * interest_month(interest_rate);
-      const capital1 = annuity_info.annuity_per_month - interest1;
-      const rest1 = prevLastItem.rest - annuity_info.annuity_per_month;
-      const total1 = annuity_info.annuity_per_month + prevLastItem.total_payed;
+      const capital1 = annuity_per_month - interest1;
+      const rest1 = prevLastItem.rest - annuity_per_month;
+      const total1 = annuity_per_month + prevLastItem.total_payed;
       return [
         ...prev,
         {

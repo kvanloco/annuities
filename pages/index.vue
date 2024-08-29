@@ -107,21 +107,6 @@ const toast = useToast();
 import { useStorage } from "@vueuse/core";
 import { v4 as uuidv4 } from "uuid";
 
-const annuityItems = computed(() => {
-  const items = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key.startsWith("annuity")) {
-      const item = localStorage.getItem(key);
-
-      console.log("item", JSON.parse(item));
-      items.push(item);
-    }
-  }
-  console.log("annuityItems", items);
-  return items;
-});
-
 const saveAnnuity = () => {
   // save to storage
   const uniqueKey = uuidv4();

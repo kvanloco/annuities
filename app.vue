@@ -16,7 +16,13 @@ useHead({
       id="element-to-print"
       ref="printElement"
     >
-      <h1>Annuity Calculator</h1>
+      <div class="flex gap-2 items-center">
+        <h1 class="text-xl pe-5">Annuity Calculator</h1>
+        <div class="text-gray-500"><NuxtLink to="/">Home</NuxtLink></div>
+        <div class="text-gray-500">
+          <NuxtLink to="/saved"> Saved annuities</NuxtLink>
+        </div>
+      </div>
       <ColorScheme
         ><USelect
           v-model="$colorMode.preference"
