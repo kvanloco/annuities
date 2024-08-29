@@ -1,30 +1,33 @@
 <template>
   <div>
     <h1 class="text-xl font-bold">Saved annuities</h1>
-    <UTable :rows="annuityTable" :columns="columns" :ui="{}">
-      <template #loan_amount-data="{ row }">
-        <span>{{ toEuro.format(row.loan_amount) }}</span>
-      </template>
-      <template #interest_rate_year-data="{ row }">
-        <span>{{ toPercent.format(row.interest_rate_year / 100) }}</span>
-      </template>
-      <template #interest_rate_month-data="{ row }">
-        <span>{{ toPercent.format(row.interest_rate_month / 100) }}</span>
-      </template>
-      <template #actions-data="{ row }">
-        <UDropdown :items="items(row)">
-          <UButton
-            color="gray"
-            variant="ghost"
-            icon="i-heroicons-ellipsis-horizontal-20-solid"
-          />
-        </UDropdown>
-      </template>
-    </UTable>
+    <ClientOnly>
+      <UTable :rows="annuityTable" :columns="columns" :ui="{}">
+        <template #loan_amount-data="{ row }">
+          <span>{{ toEuro.format(row.loan_amount) }}</span>
+        </template>
+        <template #interest_rate_year-data="{ row }">
+          <span>{{ toPercent.format(row.interest_rate_year / 100) }}</span>
+        </template>
+        <template #interest_rate_month-data="{ row }">
+          <span>{{ toPercent.format(row.interest_rate_month / 100) }}</span>
+        </template>
+        <template #actions-data="{ row }">
+          <UDropdown :items="items(row)">
+            <UButton
+              color="gray"
+              variant="ghost"
+              icon="i-heroicons-ellipsis-horizontal-20-solid"
+            />
+          </UDropdown>
+        </template>
+      </UTable>
+    </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ClientOnly } from "#build/components";
 import { useStorage } from "@vueuse/core";
 
 // HELPER FUNCTIONS
