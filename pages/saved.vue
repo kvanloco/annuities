@@ -27,8 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import { ClientOnly } from "#build/components";
 import { useStorage } from "@vueuse/core";
+
+const annuityItems = ref(null);
 
 // HELPER FUNCTIONS
 let toEuro = new Intl.NumberFormat("be-BE", {
@@ -70,6 +71,11 @@ const columns = [
 const items = (row) => [
   [
     {
+      label: "View",
+      icon: "i-heroicons-pencil-square-20-solid",
+      click: () => console.log("Edit", row.id),
+    },
+    {
       label: "Edit",
       icon: "i-heroicons-pencil-square-20-solid",
       click: () => console.log("Edit", row.id),
@@ -77,43 +83,62 @@ const items = (row) => [
     {
       label: "Duplicate",
       icon: "i-heroicons-document-duplicate-20-solid",
+      disabled: true,
     },
   ],
   [
     {
       label: "Archive",
       icon: "i-heroicons-archive-box-20-solid",
+      disabled: true,
     },
     {
       label: "Move",
       icon: "i-heroicons-arrow-right-circle-20-solid",
+      disabled: true,
     },
   ],
   [
     {
       label: "Delete",
       icon: "i-heroicons-trash-20-solid",
+      click: () => {
+        deleteAnnuityItem(row.id);
+        //window.location.reload();
+        annuityItems.value = getAnnuityItems();
+      },
     },
   ],
 ];
 const annuityTable = computed(() => {
   return annuityItems.value.map((annuityItem) => {
-    return annuityItem.input_parameters;
+    return {
+      ...annuityItem.input_parameters,
+      id: annuityItem.id,
+    };
   });
 });
 
-const annuityItems = computed(() => {
+onMounted(() => {
+  annuityItems.value = getAnnuityItems();
+});
+const getAnnuityItems = () => {
   const items = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     if (key.startsWith("annuity")) {
       const item = localStorage.getItem(key);
       const item2 = JSON.parse(item);
-      items.push(item2);
+      items.push({ ...item2, id: key });
     }
   }
+  console.log(items);
   return items;
-});
+};
+
+const deleteAnnuityItem = (id: string) => {
+  localStorage.removeItem(id);
+};
 </script>
 
 <style scoped></style>
