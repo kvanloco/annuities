@@ -2,6 +2,15 @@
   <div>
     <h1 class="text-xl font-bold">Saved annuities</h1>
     <UTable :rows="annuityTable" :columns="columns" :ui="{}">
+      <template #loan_amount-data="{ row }">
+        <span>{{ toEuro.format(row.loan_amount) }}</span>
+      </template>
+      <template #interest_rate_year-data="{ row }">
+        <span>{{ toPercent.format(row.interest_rate_year / 100) }}</span>
+      </template>
+      <template #interest_rate_month-data="{ row }">
+        <span>{{ toPercent.format(row.interest_rate_month / 100) }}</span>
+      </template>
       <template #actions-data="{ row }">
         <UDropdown :items="items(row)">
           <UButton
@@ -12,14 +21,22 @@
         </UDropdown>
       </template>
     </UTable>
-    <div v-for="annuityItem in annuityItems">
-      {{ annuityItem.input_parameters }}
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useStorage } from "@vueuse/core";
+
+// HELPER FUNCTIONS
+let toEuro = new Intl.NumberFormat("be-BE", {
+  style: "currency",
+  currency: "EUR",
+});
+
+let toPercent = new Intl.NumberFormat("be-BE", {
+  style: "percent",
+  maximumSignificantDigits: 3,
+});
 
 const columns = [
   {
