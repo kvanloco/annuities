@@ -103,18 +103,22 @@
 </template>
 
 <script setup lang="ts">
+import type { AnnuityResult } from "@/types/types";
 const toast = useToast();
-import { useStorage } from "@vueuse/core";
 import { v4 as uuidv4 } from "uuid";
+import { useAnnuityStorage } from "@/composables/annuityStorage";
+const { saveAnnuityItem } = useAnnuityStorage();
+
+const amount = ref(100000);
+const rate = ref(4);
+const duration = ref(10);
+
+const start_date = ref(new Date().toISOString().slice(0, 10));
+const annuityResult = ref<AnnuityResult>();
 
 const saveAnnuity = () => {
-  // save to storage
-  const uniqueKey = uuidv4();
-  const prefix = "annuity-";
-  const key = prefix + uniqueKey;
-  //state.value = { ...state.value, count: state.value.count + 1 };
-  //console.log("state", state.value);
-  localStorage.setItem(key, JSON.stringify(annuityResult.value));
+  if (!annuityResult.value) return;
+  saveAnnuityItem(annuityResult.value);
   toast.add({
     title: "Annuity saved",
     description: "Annuity saved successfully",
@@ -135,13 +139,6 @@ let toDate = new Intl.DateTimeFormat("be-BE", {
   dateStyle: "short",
 });
 
-const amount = ref(100000);
-const rate = ref(4);
-const duration = ref(10);
-
-const start_date = ref(new Date().toISOString().slice(0, 10));
-const annuityResult = ref(undefined);
-
 const calculate = async () => {
   const annuityResults = await $fetch("/api/annuity", {
     method: "POST",
@@ -152,14 +149,13 @@ const calculate = async () => {
       start_date: start_date.value,
     },
   });
-  //console.log("annuityResult", annuityResults);
-  //annuityResult.value = annuityResult;
   toast.add({
     title: "The annuity has been calculated",
   });
   return (annuityResult.value = annuityResults);
 };
 
+/*
 watch(
   () => annuityResult,
   () => {
@@ -167,7 +163,7 @@ watch(
     !annuityResult.value ? [] : annuityResult.value.annuity_table;
   }
 );
-
+*/
 const annuityTable = computed(() => {
   if (!annuityResult.value) return [];
   return annuityResult.value.annuity_table;

@@ -27,9 +27,13 @@
 </template>
 
 <script setup lang="ts">
-import { useStorage } from "@vueuse/core";
+import type { AnnuityResult, AnnuityResultWithId } from "@/types/types";
+import { useAnnuityStorage } from "@/composables/annuityStorage";
 
-const annuityItems = ref(null);
+const { getAnnuityItems, deleteAnnuityItem } = useAnnuityStorage();
+const toast = useToast();
+
+const annuityItems = ref<AnnuityResultWithId[]>();
 
 // HELPER FUNCTIONS
 let toEuro = new Intl.NumberFormat("be-BE", {
@@ -68,7 +72,7 @@ const columns = [
   },
 ];
 
-const items = (row) => [
+const items = (row: AnnuityResultWithId) => [
   [
     {
       label: "View",
@@ -104,14 +108,17 @@ const items = (row) => [
       icon: "i-heroicons-trash-20-solid",
       click: () => {
         deleteAnnuityItem(row.id);
-        //window.location.reload();
         annuityItems.value = getAnnuityItems();
+        toast.add({
+          title: "Annuity deleted",
+          description: "Annuity deleted successfully",
+        });
       },
     },
   ],
 ];
 const annuityTable = computed(() => {
-  return annuityItems.value.map((annuityItem) => {
+  return annuityItems.value?.map((annuityItem: AnnuityResultWithId) => {
     return {
       ...annuityItem.input_parameters,
       id: annuityItem.id,
@@ -122,7 +129,7 @@ const annuityTable = computed(() => {
 onMounted(() => {
   annuityItems.value = getAnnuityItems();
 });
-const getAnnuityItems = () => {
+const getAnnuityItemsOld = () => {
   const items = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
@@ -136,7 +143,7 @@ const getAnnuityItems = () => {
   return items;
 };
 
-const deleteAnnuityItem = (id: string) => {
+const deleteAnnuityItemold = (id: string) => {
   localStorage.removeItem(id);
 };
 </script>

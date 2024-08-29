@@ -1,4 +1,10 @@
 import dayjs from "dayjs";
+import type {
+  InputParameters,
+  AnnuityInfo,
+  AnnuityTable,
+  AnnuityResult,
+} from "@/types/types";
 
 dayjs().format();
 /**
@@ -6,38 +12,6 @@ dayjs().format();
  *
  *
  */
-
-type InputParameters = {
-  loan_amount: number;
-  periods_years: number;
-  periods_months: number;
-  interest_rate_year: number;
-  interest_rate_month: number;
-};
-
-type AnnuityInfo = {
-  annuity_per_month: number;
-  annuity_per_year: number;
-  total_payoff: number;
-  interest_cost: number;
-};
-
-type AnnuityTable = {
-  index: number;
-  period: number;
-  payoff_month: string;
-  annuity: number;
-  interest: number;
-  capital: number;
-  amount_open: number;
-  amount_payed: number;
-};
-
-type AnnuityResult = {
-  input_parameters: InputParameters;
-  annuity_info: AnnuityInfo;
-  annuity_table: AnnuityTable;
-};
 
 /*
 // START PARAMETERS
