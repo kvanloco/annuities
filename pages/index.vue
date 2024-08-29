@@ -197,7 +197,11 @@ const inputParameterTable = computed(() => {
     },
     {
       parameter: "Start date",
-      value: toDate.format(annuityResult.value.input_parameters.start_date),
+      value: toDate.format(
+        annuityResult.value.input_parameters.start_date
+          ? new Date(annuityResult.value.input_parameters.start_date)
+          : new Date()
+      ),
     },
   ];
 });

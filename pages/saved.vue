@@ -12,6 +12,9 @@
         <template #interest_rate_month-data="{ row }">
           <span>{{ toPercent.format(row.interest_rate_month / 100) }}</span>
         </template>
+        <template #start_date-data="{ row }">
+          <span>{{ row.start_date }}</span>
+        </template>
         <template #actions-data="{ row }">
           <UDropdown :items="items(row)">
             <UButton
@@ -44,6 +47,10 @@ let toEuro = new Intl.NumberFormat("be-BE", {
 let toPercent = new Intl.NumberFormat("be-BE", {
   style: "percent",
   maximumSignificantDigits: 3,
+});
+
+let toDate = new Intl.DateTimeFormat("be-BE", {
+  dateStyle: "short",
 });
 
 const columns = [

@@ -31,6 +31,7 @@ export function useAnnuityStorage() {
     const key = prefix + uniqueKey;
     //state.value = { ...state.value, count: state.value.count + 1 };
     //console.log("state", state.value);
+    console.log("item", item);
     localStorage.setItem(key, JSON.stringify(item));
   };
   const deleteAnnuityItem = (id: string) => {

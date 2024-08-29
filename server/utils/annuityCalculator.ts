@@ -50,6 +50,7 @@ export function calculateAnnuityPayment(
   number_of_periods: number,
   start_date: Date = new Date()
 ): AnnuityResult {
+  console.log("start_date", start_date);
   const r = interest_month(interest_rate); // Convert interest rate to a decimal
 
   //const r = 0.25;
@@ -67,7 +68,9 @@ export function calculateAnnuityPayment(
     periods_months: period_months(number_of_periods),
     interest_rate_year: interest_rate,
     interest_rate_month: interest_month(interest_rate) * 100,
+    start_date: start_date,
   };
+  console.log("Input Parameters", input_parameters);
   //console.log("%c Input Parameters", "color:yellow; font-size:20px");
   //console.table(input_parameters);
 
