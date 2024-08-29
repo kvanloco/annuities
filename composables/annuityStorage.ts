@@ -12,7 +12,11 @@ export function useAnnuityStorage() {
         const item = localStorage.getItem(key);
         if (item) {
           const item2 = JSON.parse(item);
-          items.push({ ...item2, id: key });
+          items.push({
+            ...item2,
+            id: key,
+            start_date: new Date(item2.input_parameters.start_date),
+          });
         }
       }
     }

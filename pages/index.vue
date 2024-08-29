@@ -195,6 +195,10 @@ const inputParameterTable = computed(() => {
         annuityResult.value.input_parameters.interest_rate_month / 100
       ),
     },
+    {
+      parameter: "Start date",
+      value: toDate.format(annuityResult.value.input_parameters.start_date),
+    },
   ];
 });
 

@@ -4,6 +4,7 @@ export type InputParameters = {
   periods_months: number;
   interest_rate_year: number;
   interest_rate_month: number;
+  start_date?: Date;
 };
 
 export type AnnuityInfo = {

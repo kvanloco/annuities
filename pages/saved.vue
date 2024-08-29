@@ -68,6 +68,10 @@ const columns = [
     label: "Monthly interest",
   },
   {
+    key: "start_date",
+    label: "Start date",
+  },
+  {
     key: "actions",
   },
 ];
