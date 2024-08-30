@@ -13,7 +13,14 @@
           <span>{{ toPercent.format(row.interest_rate_month / 100) }}</span>
         </template>
         <template #start_date-data="{ row }">
-          <span>{{ row.start_date }}</span>
+          <span>
+            {{
+              row.start_date
+                ? toDate.format(new Date(row.start_date))
+                : row.start_date
+            }}
+            <br />
+          </span>
         </template>
         <template #actions-data="{ row }">
           <UDropdown :items="items(row)">
@@ -26,6 +33,7 @@
         </template>
       </UTable>
     </ClientOnly>
+    {{ toDate.format(new Date()) }}
   </div>
 </template>
 

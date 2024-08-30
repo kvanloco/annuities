@@ -203,6 +203,10 @@ const inputParameterTable = computed(() => {
           : new Date()
       ),
     },
+    {
+      parameter: "Start date2",
+      value: annuityResult.value.input_parameters.start_date,
+    },
   ];
 });
 

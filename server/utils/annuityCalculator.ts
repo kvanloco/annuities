@@ -48,9 +48,8 @@ export function calculateAnnuityPayment(
   loan_amount: number,
   interest_rate: number,
   number_of_periods: number,
-  start_date: Date = new Date()
+  start_date: Date
 ): AnnuityResult {
-  console.log("start_date", start_date);
   const r = interest_month(interest_rate); // Convert interest rate to a decimal
 
   //const r = 0.25;
