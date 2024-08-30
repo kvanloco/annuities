@@ -28,7 +28,7 @@ export type AnnuityTable = {
 export type AnnuityResult = {
   input_parameters: InputParameters;
   annuity_info: AnnuityInfo;
-  annuity_table: AnnuityTable;
+  annuity_table: AnnuityTable[];
 };
 
 export type AnnuityResultWithId = AnnuityResult & { id: string };

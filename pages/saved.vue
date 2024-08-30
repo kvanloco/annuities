@@ -33,13 +33,14 @@
         </template>
       </UTable>
     </ClientOnly>
-    {{ toDate.format(new Date()) }}
   </div>
 </template>
 
 <script setup lang="ts">
 import type { AnnuityResult, AnnuityResultWithId } from "@/types/types";
 import { useAnnuityStorage } from "@/composables/annuityStorage";
+import { useAnnuityStore } from "~/store/annuityStore";
+const annuityStore = useAnnuityStore();
 
 const { getAnnuityItems, deleteAnnuityItem } = useAnnuityStorage();
 const toast = useToast();
@@ -96,7 +97,18 @@ const items = (row: AnnuityResultWithId) => [
     {
       label: "View",
       icon: "i-heroicons-pencil-square-20-solid",
-      click: () => console.log("Edit", row.id),
+      click: () => {
+        console.log("View", row);
+        // Navigate to Index and set store values
+        /*
+        annuityStore.amount = 200;
+        annuityStore.rate = 4;
+        annuityStore.duration = 20;
+        annuityStore.start_date = "2024-08-30";
+        annuityStore.calculate();
+        navigateTo({ path: "/" });
+        */
+      },
     },
     {
       label: "Edit",
@@ -148,23 +160,6 @@ const annuityTable = computed(() => {
 onMounted(() => {
   annuityItems.value = getAnnuityItems();
 });
-const getAnnuityItemsOld = () => {
-  const items = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key.startsWith("annuity")) {
-      const item = localStorage.getItem(key);
-      const item2 = JSON.parse(item);
-      items.push({ ...item2, id: key });
-    }
-  }
-  console.log(items);
-  return items;
-};
-
-const deleteAnnuityItemold = (id: string) => {
-  localStorage.removeItem(id);
-};
 </script>
 
 <style scoped></style>

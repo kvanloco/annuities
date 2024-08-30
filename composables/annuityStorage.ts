@@ -2,8 +2,6 @@ import { v4 as uuidv4 } from "uuid";
 import type { AnnuityResultWithId, AnnuityResult } from "@/types/types";
 
 export function useAnnuityStorage() {
-  const annuityInLocalStorage = ref(null);
-
   const getAnnuityItems = () => {
     const items: AnnuityResultWithId[] = [];
     for (let i = 0; i < localStorage.length; i++) {
@@ -29,9 +27,6 @@ export function useAnnuityStorage() {
     const uniqueKey = uuidv4();
     const prefix = "annuity-";
     const key = prefix + uniqueKey;
-    //state.value = { ...state.value, count: state.value.count + 1 };
-    //console.log("state", state.value);
-    console.log("item", item);
     localStorage.setItem(key, JSON.stringify(item));
   };
   const deleteAnnuityItem = (id: string) => {
