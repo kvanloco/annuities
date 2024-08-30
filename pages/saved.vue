@@ -37,7 +37,11 @@
 </template>
 
 <script setup lang="ts">
-import type { AnnuityResult, AnnuityResultWithId } from "@/types/types";
+import type {
+  AnnuityResult,
+  AnnuityResultWithId,
+  InputParameters,
+} from "@/types/types";
 import { useAnnuityStorage } from "@/composables/annuityStorage";
 import { useAnnuityStore } from "~/store/annuityStore";
 const annuityStore = useAnnuityStore();
@@ -92,51 +96,30 @@ const columns = [
   },
 ];
 
-const items = (row: AnnuityResultWithId) => [
+const items = (row: InputParameters) => [
   [
     {
       label: "View",
       icon: "i-heroicons-pencil-square-20-solid",
       click: () => {
-        console.log("View", row);
         // Navigate to Index and set store values
-        /*
-        annuityStore.amount = 200;
-        annuityStore.rate = 4;
-        annuityStore.duration = 20;
-        annuityStore.start_date = "2024-08-30";
-        annuityStore.calculate();
         navigateTo({ path: "/" });
-        */
+        annuityStore.amount = Number(row.loan_amount);
+        annuityStore.rate = Number(row.interest_rate_year);
+        annuityStore.duration = Number(row.periods_years);
+        annuityStore.start_date = new Date(row.start_date)
+          .toISOString()
+          .slice(0, 10);
+        annuityStore.calculate();
       },
     },
-    {
-      label: "Edit",
-      icon: "i-heroicons-pencil-square-20-solid",
-      click: () => console.log("Edit", row.id),
-    },
-    {
-      label: "Duplicate",
-      icon: "i-heroicons-document-duplicate-20-solid",
-      disabled: true,
-    },
   ],
-  [
-    {
-      label: "Archive",
-      icon: "i-heroicons-archive-box-20-solid",
-      disabled: true,
-    },
-    {
-      label: "Move",
-      icon: "i-heroicons-arrow-right-circle-20-solid",
-      disabled: true,
-    },
-  ],
+
   [
     {
       label: "Delete",
       icon: "i-heroicons-trash-20-solid",
+      class: "text-red-500",
       click: () => {
         deleteAnnuityItem(row.id);
         annuityItems.value = getAnnuityItems();

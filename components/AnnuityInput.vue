@@ -58,6 +58,7 @@ const { saveAnnuityItem } = useAnnuityStorage();
 
 // if lastest_input is in local storage, use it
 onMounted(() => {
+  /*
   const lastest_input = localStorage.getItem("lastest_input");
   if (lastest_input) {
     const lastest_input_json = JSON.parse(lastest_input);
@@ -66,6 +67,7 @@ onMounted(() => {
     annuityStore.duration = lastest_input_json.duration;
     annuityStore.start_date = lastest_input_json.start_date;
   }
+    */
 });
 const saveAnnuity = () => {
   if (!annuityStore.annuityResult) return;
