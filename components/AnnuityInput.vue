@@ -3,7 +3,7 @@
     <div class="w-1/2">
       <div class="my-2">
         <label for="amount">Loan Amount</label>
-        <UInput type="number" v-model="annuityStore.amount">
+        <UInput type="number" v-model="amount">
           <template #trailing>
             <span class="text-gray-500 dark:text-gray-400 text-xs">EUR</span>
           </template>
@@ -11,7 +11,7 @@
       </div>
       <div class="my-2">
         <label for="rate">Rate in % per year</label>
-        <UInput type="number" v-model="annuityStore.rate">
+        <UInput type="number" v-model="rate">
           <template #trailing>
             <span class="text-gray-500 dark:text-gray-400 text-xs">%</span>
           </template>
@@ -21,7 +21,7 @@
     <div class="w-1/2">
       <div class="my-2">
         <label for="duration">Duration in years</label>
-        <UInput type="number" v-model="annuityStore.duration">
+        <UInput type="number" v-model="duration">
           <template #trailing>
             <span class="text-gray-500 dark:text-gray-400 text-xs">YEARS</span>
           </template></UInput
@@ -29,7 +29,7 @@
       </div>
       <div class="my-2">
         <label for="duration">Start date</label>
-        <UInput type="date" v-model="annuityStore.start_date">
+        <UInput type="date" v-model="start_date">
           <template #trailing>
             <span class="text-gray-500 dark:text-gray-400 text-xs">DATE</span>
           </template>
@@ -37,38 +37,36 @@
       </div>
     </div>
   </div>
-  <div class="flex gap-2">
+  <div class="flex gap-2 justify-between">
     <div class="my-2">
-      <UButton @click="calculate">Calculate</UButton>
+      <UButton @click="onCalculate">Calculate</UButton>
     </div>
 
-    <div class="my-2" v-if="annuityStore.annuityResult">
-      <UButton @click="saveAnnuity">Save</UButton>
+    <div class="my-2 flex gap-2" v-if="annuityStore.annuityResult">
+      <UInput v-model="name" placeholder="Give it a name"></UInput>
+      <UButton @click="onSave">Save</UButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { AnnuityResult } from "@/types/types";
+import type { AnnuityResult, InputProps } from "@/types/types";
 import { useAnnuityStore } from "~/store/annuityStore";
 const annuityStore = useAnnuityStore();
 const toast = useToast();
 import { useAnnuityStorage } from "@/composables/annuityStorage";
 const { saveAnnuityItem } = useAnnuityStorage();
 
-// if lastest_input is in local storage, use it
-onMounted(() => {
-  /*
-  const lastest_input = localStorage.getItem("lastest_input");
-  if (lastest_input) {
-    const lastest_input_json = JSON.parse(lastest_input);
-    annuityStore.amount = lastest_input_json.amount;
-    annuityStore.rate = lastest_input_json.rate;
-    annuityStore.duration = lastest_input_json.duration;
-    annuityStore.start_date = lastest_input_json.start_date;
-  }
-    */
-});
+const amount = ref<number>(100000);
+const rate = ref<number>(4);
+const duration = ref<number>(10);
+const start_date = ref<string>(new Date().toISOString().slice(0, 10));
+const name = ref<string>("");
+
+const emit = defineEmits<{
+  calculate: [InputProps];
+}>();
+
 const saveAnnuity = () => {
   if (!annuityStore.annuityResult) return;
   saveAnnuityItem(annuityStore.annuityResult);
@@ -76,6 +74,20 @@ const saveAnnuity = () => {
     title: "Annuity saved",
     description: "Annuity saved successfully",
   });
+};
+
+const onCalculate = () => {
+  console.log("onCalculate");
+  emit("calculate", {
+    amount: amount.value,
+    rate: rate.value,
+    duration: duration.value,
+    start_date: start_date.value,
+  });
+};
+
+const onSave = () => {
+  console.log("onSave");
 };
 
 const calculate = async () => {

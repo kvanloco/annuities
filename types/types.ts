@@ -1,3 +1,10 @@
+export type InputProps = {
+  loan_amount: number;
+  periods_years: number;
+  interest_rate_year: number;
+  start_date: string;
+};
+
 export type InputParameters = {
   loan_amount: number;
   periods_years: number;
@@ -31,4 +38,4 @@ export type AnnuityResult = {
   annuity_table: AnnuityTable[];
 };
 
-export type AnnuityResultWithId = AnnuityResult & { id: string };
+export type AnnuityResultWithId = AnnuityResult & { id: string; name: string };

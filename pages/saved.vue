@@ -3,6 +3,9 @@
     <h1 class="text-xl font-bold">Saved annuities</h1>
     <ClientOnly>
       <UTable :rows="annuityTable" :columns="columns" :ui="{}">
+        <template #name-data="{ row }">
+          <span>{{ row.name }}</span>
+        </template>
         <template #loan_amount-data="{ row }">
           <span>{{ toEuro.format(row.loan_amount) }}</span>
         </template>
@@ -68,6 +71,10 @@ let toDate = new Intl.DateTimeFormat("be-BE", {
 
 const columns = [
   {
+    key: "name",
+    label: "Name",
+  },
+  {
     key: "loan_amount",
     label: "Loan amount",
   },
@@ -110,6 +117,7 @@ const items = (row: InputParameters) => [
         annuityStore.start_date = new Date(row.start_date)
           .toISOString()
           .slice(0, 10);
+
         annuityStore.calculate();
       },
     },
@@ -136,6 +144,7 @@ const annuityTable = computed(() => {
     return {
       ...annuityItem.input_parameters,
       id: annuityItem.id,
+      name: annuityItem.name,
     };
   });
 });

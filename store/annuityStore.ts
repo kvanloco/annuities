@@ -6,12 +6,13 @@ export const useAnnuityStore = defineStore("annuity", () => {
   const rate = ref<number>(4);
   const duration = ref<number>(10);
   const start_date = ref<string>(new Date().toISOString().slice(0, 10));
+  const name = ref<string>("");
   //const start_date = ref<Date>(new Date().toISOString().slice(0, 10));
-  const annuityResult = ref<AnnuityResult[]>();
+  //const annuityResult = ref<AnnuityResult>();
 
   const calculate = async () => {
     console.log("calculate from store");
-    const annuityResults: AnnuityResult[] = await $fetch("/api/annuity", {
+    const annuityResult: AnnuityResult = await $fetch("/api/annuity", {
       method: "POST",
       body: {
         amount: amount.value,
@@ -21,7 +22,7 @@ export const useAnnuityStore = defineStore("annuity", () => {
       },
     });
 
-    return (annuityResult.value = annuityResults);
+    return annuityResult;
   };
 
   return {
@@ -29,7 +30,6 @@ export const useAnnuityStore = defineStore("annuity", () => {
     rate,
     duration,
     start_date,
-    annuityResult,
     calculate,
   };
 });
