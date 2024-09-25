@@ -44,7 +44,7 @@ const annuity = calculateAnnuityPayment(
 console.log('%c Test', 'color:yellow; font-size:20px');
 console.log(annuity);
 */
-export function calculateAnnuityPayment(
+export function calculateAnnuityPayment<InputProps>(
   loan_amount: number,
   interest_rate: number,
   number_of_periods: number,
@@ -69,7 +69,7 @@ export function calculateAnnuityPayment(
     interest_rate_month: interest_month(interest_rate) * 100,
     start_date: start_date,
   };
-  console.log("Input Parameters", input_parameters);
+  //console.log("Input Parameters", input_parameters);
   //console.log("%c Input Parameters", "color:yellow; font-size:20px");
   //console.table(input_parameters);
 

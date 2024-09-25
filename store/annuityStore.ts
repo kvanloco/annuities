@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { AnnuityResult } from "@/types/types";
+import type { AnnuityResult, InputProps } from "@/types/types";
 
 export const useAnnuityStore = defineStore("annuity", () => {
   const amount = ref<number>(100000);
@@ -10,18 +10,25 @@ export const useAnnuityStore = defineStore("annuity", () => {
   //const start_date = ref<Date>(new Date().toISOString().slice(0, 10));
   //const annuityResult = ref<AnnuityResult>();
 
-  const calculate = async () => {
-    console.log("calculate from store");
-    const annuityResult: AnnuityResult = await $fetch("/api/annuity", {
+  const calculate = async (values: InputProps) => {
+    console.log("calculate from store, values: ", values);
+    const { data: annuityResult, error } = await $fetch("/api/annuity", {
       method: "POST",
       body: {
-        amount: amount.value,
-        rate: rate.value,
-        duration: duration.value,
-        start_date: start_date.value,
+        amount: values.loan_amount,
+        rate: values.interest_rate_year,
+        duration: values.periods_years,
+        start_date: values.start_date,
+        // amount: 100000,
+        // rate: 6,
+        // duration: 10,
+        // start_date: "2021-01-01",
       },
     });
-
+    if (error) {
+      console.log("error", error);
+    }
+    console.log(annuityResult);
     return annuityResult;
   };
 

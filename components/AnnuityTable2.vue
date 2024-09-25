@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="annuityStore.annuityResult" class="mt-2">
+    <div class="mt-2">
       <h1 class="text-xl font-bold">Input parameters</h1>
       <UTable
         :rows="inputParameterTable"
@@ -53,11 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  AnnuityResult,
-  AnnuityResultWithId,
-  InputParameters,
-} from "@/types/types";
+import type { AnnuityResult } from "@/types/types";
 
 const props = defineProps({
   annuityResult: {
