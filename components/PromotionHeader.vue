@@ -3,8 +3,8 @@
     <h1
       class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl my-9"
     >
-      <span class="text-primary">Easily Calculate </span> Your Mortgage
-      Payments!
+      <span class="text-primary">Easily Calculate </span><br />
+      Your Mortgage Payments!
     </h1>
     <div class="mt-4 text-gray-600 dark:text-gray-400 text-left">
       <h2
