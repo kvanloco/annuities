@@ -1,12 +1,7 @@
 <template>
   <div ref="document" id="element-to-convert">
-    <AnnuityInput />
-    <UDivider />
-    <AnnuityTable />
+    <PromotionHeader />
   </div>
 </template>
 
-<script setup lang="ts">
-import { useAnnuityStore } from "~/store/annuityStore";
-const annuityStore = useAnnuityStore();
-</script>
+<script setup lang="ts"></script>
